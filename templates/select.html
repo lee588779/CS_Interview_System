@@ -1,0 +1,98 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Select a Question</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Select a Question</h1>-->
+<!--    <p>{{ question }}</p>-->
+<!--&lt;!&ndash;    <form action="{{ url_for('answer') }}" method="post">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="hidden" name="question" value="{{ question }}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="submit" value="Answer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </form>&ndash;&gt;-->
+<!--    <form action="answer" method="get">-->
+<!--        <input type="hidden" name="question" value="{{ question }}">-->
+<!--        <input type="submit" value="Answer">-->
+<!--    </form>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>모의 면접</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Questions</strong></a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Question</h1>
+									</header>
+									<p>{{ question }}</p>
+									<form action="answer" method="get">
+										<input type="hidden" name="question" value="{{ question }}">
+										<input type="submit" value="Answer">
+									</form>
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="qusetions.html">Questions</a></li>
+										<li><a href="static/dictionary.html">Dictionary</a></li>
+									</ul>
+								</nav>
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>

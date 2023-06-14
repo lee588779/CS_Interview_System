@@ -1,0 +1,95 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Answer a Question</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Answer a Question</h1>-->
+<!--    <p>Question: {{ question }}</p>-->
+<!--    <p>Correct answer: {{ answers[question] }}</p>-->
+<!--    <p>Answer: {{ answer }}</p>-->
+<!--    <p>cosine_similarity: {{ cosine_sim }}</p>-->
+<!--    <p>score : {{ score }}</p>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>모의 면접</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Questions</strong></a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Answer</h1>
+									</header>
+                                    <p>Question: {{ question }}</p>
+                                    <p>Correct answer: {{ answers[question] }}</p>
+                                    <p>Answer: {{ answer }}</p>
+                                    <p>cosine_similarity: {{ cosine_sim }}</p>
+                                    <p>score : {{ score }}</p>
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="qusetions.html">Questions</a></li>
+										<li><a href="static/dictionary.html">Dictionary</a></li>
+									</ul>
+								</nav>
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>

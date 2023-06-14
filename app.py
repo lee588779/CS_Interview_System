@@ -1,47 +1,182 @@
-from flask import Flask # 서버 구현을 위한 Flask 객체 import
-from flask_restx import Api, Resource # Api 구현을 위한 Api 객체 import
-from flask import request, render_template # request 객체와 render_template 함수를 임포트해
-from sklearn.feature_extraction.text import TfidfVectorizer # 코사인 유사도를 측정하기 위한 패키지를 임포트해
+from flask import Flask, render_template, request
+from google.cloud import speech
+import sounddevice as sd
+import soundfile as sf
+import re
 
-app = Flask(__name__) # Flask 객체 선언, 파라미터로 어플리케이션 이름을 넘겨준다.
-api = Api(app) # Flask 객체에 Api 객체를 등록한다.
+from konlpy.tag import Okt
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import jaccard_score
+import urllib3
+import json
+import base64
 
-questions = {
-    "1": "What is the capital city of South Korea?",
-    "2": "Who is the president of the United States?",
-    "3": "What is the name of the largest bone in the human body?",
-    "4": "How many planets are there in the solar system?",
-    "5": "What is the chemical symbol of gold?"
-}
+app = Flask(__name__)
 
-# 정답 목록을 딕셔너리 형태로 만들어
-answers = {
-    "1": "Seoul",
-    "2": "Joe Biden",
-    "3": "Femur",
-    "4": "Eight",
-    "5": "Au"
-}
+# CS 기술 면접 문제 목록
+questions = [
+    "디자인 패턴은 무엇인가요?",
+    "싱글톤 패턴은 무엇인가요?",
+    "What is inheritance?",
+    "What is encapsulation?",
+    "What is abstraction?"
+]
 
-# TfidfVectorizer 객체를 생성해
-vectorizer = TfidfVectorizer()
+# 정답 문장과 사용자가 답변한 문장을 리스트로 저장할 딕셔너리
+answers = {}
 
-@api.route('/quiz') # '/quiz' 경로에 클래스 Resource를 상속받은 Quiz 클래스를 연결해
-class Quiz(Resource):
-    def get(self): # GET 요청시에 동작하는 메소드
-        return render_template('quiz.html', questions=questions) # quiz.html 파일을 렌더링하고 questions 변수를 넘겨줘
+# 정답 문장을 딕셔너리에 저장
+answers["디자인 패턴은 무엇인가요?"] = "디자인 패턴은 프로그램을 설계할 때 발생했던 문제점들을 객체 간의 상호 관계 등을 이용하여 해결할 수 있도록 하나의 규약 형태로 만들어 놓은 것을 의미합니다."
+answers["싱글톤 패턴은 무엇인가요?"] = "싱글톤 패턴은 클래스의 인스턴스가 오직 하나만 생성되도록 보장하고, 어디서든지 그 인스턴스에 접근할 수 있도록 하는 디자인 패턴입니다."
 
-    def post(self): # POST 요청시에 동작하는 메소드
-        question_id = request.form.get('question_id') # 폼 데이터에서 문제 번호를 가져와
-        transcript = request.form.get('transcript') # 폼 데이터에서 음성 인식 결과를 가져와
-        answer = answers[question_id] # 정답 목록에서 해당 문제의 정답을 가져와
-        vectors = vectorizer.fit_transform([transcript, answer]) # 음성 인식 결과와 정답을 벡터화해
-        cosine_similarity = vectors[0].dot(vectors[1].T).toarray()[0][0] # 코사인 유사도를 계산해
-        return render_template('result.html', transcript=transcript, answer=answer, cosine_similarity=cosine_similarity) # result.html 파일을 렌더링하고 음성 인식 결과, 정답, 코사인 유사도 변수를 넘겨줘
+openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor"
 
+# 메인 페이지 라우팅
+@app.route('/')
+def index():
+    return render_template('index.html', questions=questions)
 
-@api.route('/stt') # '/stt' 경로에 클래스 Resource를 상속받은 STT 클래스를 연결한다.
-class STT(Resource):
-    def get(self): # GET 요청시에 동작하는 메소드
-        return {'message': 'Hello, World!'} # JSON 형태로 응답을 반환한다.
+# 문제 선택 페이지 라우팅
+@app.route('/select')
+def select():
+    # 선택한 문제의 인덱스를 받아옴
+    index = request.args.get('index')
+    # 인덱스에 해당하는 문제를 가져옴
+    question = questions[int(index)]
+    return render_template('select.html', question=question)
 
+@app.route('/answer', methods=['GET'])
+def answer():
+    # GET 요청에서 question 인자를 받아옴
+    question = request.args.get('question')
+    # 마이크로부터 음성 데이터를 캡처함
+    fs = 16000  # 샘플링 주파수
+    duration = 20  # 녹음 시간 (초)
+    print("Recording...")
+    data = sd.rec(int(duration * fs), samplerate=fs, channels=1)
+    sd.wait()  # 녹음이 끝날 때까지 대기
+    print("Done")
+    # 녹음한 음성 데이터를 wav파일로 저장함
+    filename = "recorded.wav"
+    sf.write(filename, data, fs)
+    # 구글 stt api 클라이언트 생성함
+    client = speech.SpeechClient()
+    # wav파일을 열어서 바이너리 데이터로 읽어옴
+    with open(filename, "rb") as f:
+        content = f.read()
+    # 음성 인식 요청을 생성함
+    audio = speech.RecognitionAudio(content=content)
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=fs,
+        language_code="ko-KR",
+    )
+    # 음성 인식 요청을 보내고 결과를 받아옴
+    response = client.recognize(config=config, audio=audio)
+    # 결과에서 첫 번째 대안의 텍스트를 가져옴
+    for result in response.results:
+        answer = result.alternatives[0].transcript
+        break
+
+    # 전처리 전의 문장들을 리스트로 저장
+    sentences = [question, answer]
+
+    # 전처리 후의 문장들을 저장할 빈 리스트 생성
+    preprocessed_sentences = []
+
+    # 불용어 리스트 생성
+    f = open('korean.txt', 'r', encoding='utf-8')
+    stop_words = f.readlines()
+    stop_words = [word.strip() for word in stop_words]
+    f.close()
+
+    # 어간 추출기 생성
+    stemmer = PorterStemmer()
+
+    # 표제어 추출기 생성
+    lemmatizer = WordNetLemmatizer()
+
+    # 형태소 분석기 생성 (KoNLPy의 Okt 사용)
+    tokenizer = Okt()
+
+    # 문장들에 대해 반복문 실행
+    for sentence in sentences:
+        # 대소문자 통일: 모두 소문자로 변환
+        sentence = sentence.lower()
+
+        # 구두점 제거: 정규식을 이용하여 구두점 제거
+        sentence = re.sub(r'[^\w\s]', '', sentence)
+
+        # 숫자 제거: 정규식을 이용하여 숫자 제거
+        sentence = re.sub(r'\d+', '', sentence)
+
+        # 불용어 제거: 불용어 리스트를 이용하여 불용어 제거
+        sentence = ' '.join([word for word in sentence.split() if word not in stop_words])
+
+        # 어간 추출: 어간 추출기를 이용하여 단어의 어근 찾기
+        sentence = ' '.join([stemmer.stem(word) for word in sentence.split()])
+
+        # 표제어 추출: 표제어 추출기를 이용하여 단어의 기본형 찾기
+        sentence = ' '.join([lemmatizer.lemmatize(word) for word in sentence.split()])
+
+        # 형태소 분석: 형태소 분석기를 이용하여 단어와 품사를 추출
+        sentence = tokenizer.pos(sentence)
+
+        # 명사만 추출: 품사가 명사인 단어만 선택
+        sentence = [word for word, tag in sentence if tag == 'Noun']
+
+        # 전처리 후의 문장 리스트에 추가
+        preprocessed_sentences.append(sentence)
+
+    # 문장들을 단어 단위로 벡터화
+    # vectorizer = CountVectorizer()
+    # X = vectorizer.fit_transform(preprocessed_sentences)
+
+    # 문장들을 n-gram으로 벡터화 (n=2)
+    vectorizer = CountVectorizer(ngram_range=(1, 2))
+    X = vectorizer.fit_transform([' '.join(sentence) for sentence in preprocessed_sentences])
+
+    # 코사인 유사도 계산
+    cosine_sim = cosine_similarity(X)
+
+    # 자카드 유사도 계산
+    jaccard_sim = jaccard_score(X[0].toarray()[0], X[1].toarray()[0], average='micro')
+
+    # 코사인 유사도와 자카드 유사도의 평균 계산
+    average_sim = (cosine_sim[0][1] + jaccard_sim) / 2
+
+    accessKey = "3f063dfd-cdea-415e-b7e9-0f92360351d3"
+    languageCode = "korean"
+    # script = answers[question]
+
+    with open(filename, "rb") as f:
+        audioContents = base64.b64encode(f.read()).decode("utf8")
+
+    requestJson = {
+        "argument": {
+            "language_code": languageCode,
+            # "script": script,
+            "audio": audioContents
+        }
+    }
+
+    http = urllib3.PoolManager()
+    response = http.request(
+        "POST",
+        openApiURL,
+        headers={"Content-Type": "application/json; charset=UTF-8", "Authorization": accessKey},
+        body=json.dumps(requestJson)
+    )
+
+    # 응답 본문을 JSON 객체로 파싱
+    score = json.loads(str(response.data, "utf-8"))['return_object']['score']
+
+    # answer.html 파일을 렌더링하여 응답함
+    return render_template('answer.html', question=question, answers=answers, answer=answer, cosine_sim=cosine_sim, jaccard_sim=jaccard_sim, average_sim=average_sim, correct_answer=answers[question], score=score)
+
+if __name__ == '__main__':
+    app.run()
