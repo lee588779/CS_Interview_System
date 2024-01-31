@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CS 기술 사전</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Dictionary</strong></a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>CS Dictionary</h1>
+									</header>
+
+									<!-- Content -->
+										<h2 id="content">Object Oriented Programming</h2>
+										<p>객체지향 프로그래밍이란 인간 중심적 프로그래밍 패러다임이라고 할 수 있다. 즉, 현실 세계를 프로그래밍으로 옮겨와 프로그래밍하는 것을 말한다. 현실 세계의 사물들을 객체라고 보고 그 객체로부터 개발하고자 하는 애플리케이션에
+											 필요한 특징들을 뽑아와 프로그래밍 하는 것이다. 이것을 추상화라한다.</p>
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>SRP(Single Responsibility Principle)</h3>
+												<p>클래스는 단 하나의 책임을 가져야 하며 클래스를 변경하는 이유는 단 하나의 이유이어야 한다.</p>
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>OCP(Open-Closed Principle) : 개방-폐쇄 원칙</h3>
+												<p>확장에는 열려 있어야 하고 변경에는 닫혀 있어야 한다.</p>
+											</div>
+											<!-- Break -->
+											<div class="col-4 col-12-medium">
+												<h3>LSP(Liskov Substitution Principle) : 리스코프 치환 원칙</h3>
+												<p>상위 타입의 객체를 하위 타입의 객체로 치환해도 상위 타입을 사용하는 프로그램은 정상적으로 동작해야 한다.</p>
+											</div>
+											<div class="col-4 col-12-medium">
+												<h3>ISP(Interface Segregation Principle) : 인터페이스 분리 원칙</h3>
+												<p>인터페이스는 그 인터페이스를 사용하는 클라이언트를 기준으로 분리해야 한다.</p>
+											</div>
+											<div class="col-4 col-12-medium">
+												<h3>DIP(Dependency Inversion Principle) : 의존 역전 원칙</h3>
+												<p>고수준 모듈은 저수준 모듈의 구현에 의존해서는 안된다.</p>
+											</div>
+										</div>
+
+										<!-- Content -->
+										<h2 id="content">RESTful API</h2>
+										<p>월드 와이드 웹(World Wide Web a.k.a WWW)과 같은 분산 하이퍼미디어 시스템을 위한 소프트웨어 아키텍처의 한 형식으로 자원을 정의하고 자원에 대한 주소를 지정하는 방법 전반에 대한 패턴</p>
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>리소스 와 행위 를 명시적이고 직관적으로 분리한다.</h3>
+												<p>리소스는 URI로 표현되는데 리소스가 가리키는 것은 명사로 표현되어야 한다.
+													행위는 HTTP Method로 표현하고, GET(조회), POST(생성), PUT(기존 entity 전체 수정), PATCH(기존 entity 일부 수정), DELETE(삭제)을 분명한 목적으로 사용한다.</p>
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Message 는 Header 와 Body 를 명확하게 분리해서 사용한다.</h3>
+												<p>Entity 에 대한 내용은 body 에 담는다.
+													애플리케이션 서버가 행동할 판단의 근거가 되는 컨트롤 정보인 API 버전 정보, 응답받고자 하는 MIME 타입 등은 header 에 담는다.
+													header 와 body 는 http header 와 http body 로 나눌 수도 있고, http body 에 들어가는 json 구조로 분리할 수도 있다.</p>
+											</div>
+											<!-- Break -->
+											<div class="col-4 col-12-medium">
+												<h3>API 버전을 관리한다.</h3>
+												<p>환경은 항상 변하기 때문에 API 의 signature 가 변경될 수도 있음에 유의하자.
+													특정 API 를 변경할 때는 반드시 하위호환성을 보장해야 한다.</p>
+											</div>
+											<div class="col-4 col-12-medium">
+												<h3>장점</h3>
+												<p>Open API 를 제공하기 쉽다
+													멀티플랫폼 지원 및 연동이 용이하다.
+													원하는 타입으로 데이터를 주고 받을 수 있다.
+													기존 웹 인프라(HTTP)를 그대로 사용할 수 있다.</p>
+											</div>
+											<div class="col-4 col-12-medium">
+												<h3>단점</h3>
+												<p>사용할 수 있는 메소드가 한정적이다.
+													분산환경에는 부적합하다.
+													HTTP 통신 모델에 대해서만 지원한다.</p>
+											</div>
+										</div>
+
+										<!-- Content -->
+										<h2 id="content">TDD</h2>
+										<p>Test-Driven Development(TDD)는 매우 짧은 개발 사이클의 반복에 의존하는 소프트웨어 개발 프로세스이다. 우선 개발자는 요구되는 새로운 기능에 대한 자동화된 테스트케이스를 작성하고 해당
+											 테스트를 통과하는 가장 간단한 코드를 작성한다. 일단 테스트 통과하는 코드를 작성하고 상황에 맞게 리팩토링하는 과정을 거치는 것이다. 말 그대로 테스트가 코드 작성을 주도하는 개발방식인 것이다.</p>
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>Add a test</h3>
+												<p>테스트 주도형 개발에선, 새로운 기능을 추가하기 전 테스트를 먼저 작성한다. 테스트를 작성하기 위해서, 개발자는 해당 기능의 요구사항과 명세를 분명히 이해하고 있어야 한다. 이는 사용자 케이스와 사용자 스토리 등으로 이해할 수 있으며, 이는 개발자가 코드를 작성하기 전에 보다 요구사항에 집중할 수 있도록 도와준다. 이는 정말 중요한 부분이자 테스트 주도 개발이 주는 이점이라고 볼 수 있다.</p>
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Run all tests and see if new one fails</h3>
+												<p>어떤 새로운 기능을 추가하면 잘 작동하던 기능이 제대로 작동하지 않는 경우가 발생할 수 있다. 더 위험한 경우는 개발자가 이를 미처 인지하지 못하는 경우이다. 이러한 경우를 방지하기 위해 테스트 코드를 작성하는 것이다. 새로운 기능을 추가할 때 테스트 코드를 작성함으로써, 새로운 기능이 제대로 작동함과 동시에 기존의 기능들이 잘 작동하는지 테스트를 통해 확인할 수 있는 것이다.</p>
+											</div>
+											<!-- Break -->
+										</div>
+
+										<!-- Content -->
+										<h2 id="content">함수형 프로그래밍</h2>
+										<p></p>
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>immutable vs mutable</h3>
+												<p>immutable이란 말 그대로 변경 불가능함을 의미한다. immutable 객체는 객체가 가지고 있는 값을 변경할 수 없는 객체를 의미하여 값이 변경될 경우, 새로운 객체를 생성하고 변경된 값을 주입하여 반환해야 한다.
+													이와는 달리, mutable 객체는 해당 객체의 값이 변경될 경우 값을 변경한다.
+												</p>
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>first-class citizen</h3>
+												<p>함수형 프로그래밍 패러다임을 따르고 있는 언어에서의 함수(function)는 일급 객체(first class citizen)로 간주된다. 일급 객체라 함은 다음과 같다.
+
+													변수나 데이터 구조안에 함수를 담을 수 있어서 함수의 파라미터로 전달할 수 있고, 함수의 반환값으로 사용할 수 있다.
+													할당에 사용된 이름과 관계없이 고유한 구별이 가능하다.
+													함수를 리터럴로 바로 정의할 수 있다.</p>
+											</div>
+											<!-- Break -->
+											<div class="col-4 col-12-medium">
+												<h3>Reactive Programming</h3>
+												<p>반응형 프로그래밍(Reactive Programming)은 선언형 프로그래밍(declarative programming)이라고도 불리며, 명령형 프로그래밍(imperative programming)의 반대말이다. 또 함수형 프로그래밍 패러다임을 활용하는 것을 말한다. 반응형 프로그래밍은 기본적으로 모든 것을 스트림(stream)으로 본다. 스트림이란 값들의 집합으로 볼 수 있으며 제공되는 함수형 메소드를 통해 데이터를 immutable 하게 관리할 수 있다.</p>
+											</div>
+										</div>
+
+										<h2 id="content">Array vs Linked List</h2>
+										<p></p>
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<h3>Array</h3>
+												<p>가장 기본적인 자료구조인 Array 자료구조는, 논리적 저장 순서와 물리적 저장 순서가 일치한다. 따라서 인덱스(index)로 해당 원소(element)에 접근할 수 있다. 그렇기 때문에 찾고자 하는 원소의 인덱스 값을 알고 있으면 Big-O(1)에 해당 원소로 접근할 수 있다. 즉 random access 가 가능하다는 장점이 있는 것이다.
+
+													하지만 삭제 또는 삽입의 과정에서는 해당 원소에 접근하여 작업을 완료한 뒤(O(1)), 또 한 가지의 작업을 추가적으로 해줘야 하기 때문에, 시간이 더 걸린다. 만약 배열의 원소 중 어느 원소를 삭제했다고 했을 때, 배열의 연속적인 특징이 깨지게 된다. 즉 빈 공간이 생기는 것이다. 따라서 삭제한 원소보다 큰 인덱스를 갖는 원소들을 shift해줘야 하는 비용(cost)이 발생하고 이 경우의 시간 복잡도는 O(n)가 된다. 그렇기 때문에 Array 자료구조에서 삭제 기능에 대한 time complexity 의 worst case 는 O(n)이 된다.
+													
+													삽입의 경우도 마찬가지이다. 만약 첫번째 자리에 새로운 원소를 추가하고자 한다면 모든 원소들의 인덱스를 1 씩 shift 해줘야 하므로 이 경우도 O(n)의 시간을 요구하게 된다.
+												</p>
+											</div>
+											<div class="col-6 col-12-small">
+												<h3>Linked List</h3>
+												<p>이 부분에 대한 문제점을 해결하기 위한 자료구조가 linked list 이다. 각각의 원소들은 자기 자신 다음에 어떤 원소인지만을 기억하고 있다. 따라서 이 부분만 다른 값으로 바꿔주면 삭제와 삽입을 O(1) 만에 해결할 수 있는 것이다.
+
+													하지만 Linked List 역시 한 가지 문제가 있다. 원하는 위치에 삽입을 하고자 하면 원하는 위치를 Search 과정에 있어서 첫번째 원소부터 다 확인해봐야 한다는 것이다. Array 와는 달리 논리적 저장 순서와 물리적 저장 순서가 일치하지 않기 때문이다. 이것은 일단 삽입하고 정렬하는 것과 마찬가지이다. 이 과정 때문에, 어떠한 원소를 삭제 또는 추가하고자 했을 때, 그 원소를 찾기 위해서 O(n)의 시간이 추가적으로 발생하게 된다.
+													
+													결국 linked list 자료구조는 search 에도 O(n)의 time complexity 를 갖고, 삽입, 삭제에 대해서도 O(n)의 time complexity 를 갖는다. 그렇다고 해서 아주 쓸모없는 자료구조는 아니기에, 우리가 학습하는 것이다. 이 Linked List 는 Tree 구조의 근간이 되는 자료구조이며, Tree 에서 사용되었을 때 그 유용성이 드러난다.</p>
+											</div>
+											<div>
+												<h3>
+													추후 추가 예정
+												</h3>
+											</div>
+										</div>
+
+									<hr class="major" />
+								</section>
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="qusetions.html">Questions</a></li>
+										<li><a href="dictionary.html">Dictionary</a></li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Ante interdum</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section>
+						</div>
+					</div>
+			</div>
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

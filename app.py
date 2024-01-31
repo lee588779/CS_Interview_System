@@ -149,7 +149,7 @@ def answer():
     # 코사인 유사도와 자카드 유사도의 평균 계산
     average_sim = (cosine_sim[0][1] + jaccard_sim) / 2
 
-    accessKey = "key"
+    accessKey = "3f063dfd-cdea-415e-b7e9-0f92360351d3"
     languageCode = "korean"
     # script = answers[question]
 
