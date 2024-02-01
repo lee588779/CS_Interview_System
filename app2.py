@@ -204,7 +204,7 @@ def answer():
 
     cosjcd_mix = (cosine_sim*0.5)+(jaccard_sim*0.5)
 
-    accessKey = "3f063dfd-cdea-415e-b7e9-0f92360351d3"
+    accessKey = "key"
     languageCode = "Korean"
 
     with open(filename, "rb") as f:
